@@ -2,6 +2,7 @@ import { Tabs } from 'expo-router';
 import React from 'react';
 
 import { IconSymbol } from '@/components/ui/icon-symbol';
+import IconButton from '@/components/ui/IconButton';
 import { GlobalStyles } from '@/constants/styles';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 
@@ -22,6 +23,7 @@ export default function TabLayout() {
           title: 'Recent Expenses',
           tabBarLabel: 'Recent',
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="creditcard" color={color} />,
+          headerRight: ({ tintColor }) => <IconButton icon='add' size={24} color={tintColor} onPress={() => {}} />,
         }}
       />
       <Tabs.Screen

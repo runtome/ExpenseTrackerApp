@@ -12,8 +12,13 @@ interface ExpenseItemProps {
 }
 
 export default function ExpenseItem({ expense }: ExpenseItemProps) {
+  function expensePressHandler() {
+    // Handle expense item press (e.g., navigate to detail/edit screen)
+  }
+
   return (
     <Pressable
+      onPress={expensePressHandler}
       style={({ pressed }) => [
         styles.container,
         pressed && styles.pressed,
