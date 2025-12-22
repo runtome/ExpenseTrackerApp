@@ -1,3 +1,7 @@
+import { Text } from "react-native";
+
 export default function IconButton() {
-  return null;
+  return (
+    <Text>Manage Expense Screen</Text>
+  );
 }

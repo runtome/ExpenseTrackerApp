@@ -1,4 +1,4 @@
-import { Tabs } from 'expo-router';
+import { Tabs, router } from 'expo-router';
 import React from 'react';
 
 import { IconSymbol } from '@/components/ui/icon-symbol';
@@ -23,7 +23,7 @@ export default function TabLayout() {
           title: 'Recent Expenses',
           tabBarLabel: 'Recent',
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="creditcard" color={color} />,
-          headerRight: ({ tintColor }) => <IconButton icon='add' size={24} color={tintColor} onPress={() => {}} />,
+          headerRight: ({ tintColor }) => <IconButton icon='add' size={24} color={tintColor} onPress={() => {router.push('/ManageExpense')}} />,
         }}
       />
       <Tabs.Screen
