@@ -16,7 +16,12 @@ export default function RootLayout() {
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="(screens)/ManageExpense" options={{ headerShown: false }} />
+        <Stack.Screen 
+          name="(screens)/ManageExpense" 
+          options={{ 
+            headerShown: true,
+            title:"Manage Expense" 
+          }} />
       </Stack>
       <StatusBar style="auto" />
     </ThemeProvider>
