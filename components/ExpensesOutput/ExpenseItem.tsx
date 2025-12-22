@@ -1,7 +1,11 @@
 // components/expenses/ExpenseItem.tsx
+import { Pressable, StyleSheet, Text, View } from 'react-native';
+
 import { GlobalStyles } from '@/constants/styles';
 import { Expense } from '@/models/expense';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { formatDate } from '@/utils/date';
+
+
 
 interface ExpenseItemProps {
   expense: Expense;
@@ -18,7 +22,7 @@ export default function ExpenseItem({ expense }: ExpenseItemProps) {
       <View>
         <Text style={styles.description}>{expense.description}</Text>
         <Text style={styles.date}>
-          {expense.date.toLocaleDateString()}
+          {formatDate(expense.date)}
         </Text>
       </View>
       <View style={styles.amountContainer}>
@@ -52,15 +56,16 @@ const styles = StyleSheet.create({
     color: GlobalStyles.colors.primary100,
   },
   amountContainer: {
-    backgroundColor: GlobalStyles.colors.primary700,
+    backgroundColor: GlobalStyles.colors.primary50,
     paddingHorizontal: 12,
     paddingVertical: 4,
     borderRadius: 6,
     minWidth: 80,
     alignItems: 'center',
+    justifyContent: 'center',
   },
   amount: {
-    color: GlobalStyles.colors.accent500,
+    color: GlobalStyles.colors.primary800,
     fontWeight: 'bold',
   },
 });
