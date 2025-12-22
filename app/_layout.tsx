@@ -19,13 +19,12 @@ export default function RootLayout() {
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen 
           name="(screens)/ManageExpense" 
-          options={{ 
+          options={({ route })=>({ 
             headerShown: true,
-            title:"Manage Expense" ,
             headerStyle:{ backgroundColor: GlobalStyles.colors.primary500},
             headerTintColor:"white",
             presentation: "modal"
-          }} />
+          })} />
       </Stack>
       <StatusBar style="auto" />
     </ThemeProvider>

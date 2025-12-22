@@ -1,4 +1,5 @@
 // components/expenses/ExpenseItem.tsx
+import { router } from 'expo-router';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { GlobalStyles } from '@/constants/styles';
@@ -10,10 +11,12 @@ import { formatDate } from '@/utils/date';
 interface ExpenseItemProps {
   expense: Expense;
 }
-
 export default function ExpenseItem({ expense }: ExpenseItemProps) {
   function expensePressHandler() {
-    // Handle expense item press (e.g., navigate to detail/edit screen)
+    router.push({
+      pathname: '/ManageExpense',
+      params: { expenseId: expense.id },
+    });
   }
 
   return (
