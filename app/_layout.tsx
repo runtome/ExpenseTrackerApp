@@ -3,6 +3,7 @@ import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import 'react-native-reanimated';
 
+import { GlobalStyles } from '@/constants/styles';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 
 export const unstable_settings = {
@@ -20,7 +21,10 @@ export default function RootLayout() {
           name="(screens)/ManageExpense" 
           options={{ 
             headerShown: true,
-            title:"Manage Expense" 
+            title:"Manage Expense" ,
+            headerStyle:{ backgroundColor: GlobalStyles.colors.primary500},
+            headerTintColor:"white",
+            presentation: "modal"
           }} />
       </Stack>
       <StatusBar style="auto" />
