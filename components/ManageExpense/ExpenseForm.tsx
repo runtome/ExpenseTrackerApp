@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
+import { Expense } from '@/models/expense';
 import Button from '../ui/Button';
 import Input from './Input';
 
@@ -16,17 +17,20 @@ interface ExpenseFormProps {
   submitButtonLable: 'Update' | 'Add';
   onCancel: () => void;
   onSubmit: (expenseData: ExpenseFormData) => void;
+  defultValues: Expense | undefined;
 }
 
 export default function ExpenseForm({
   submitButtonLable,
   onCancel,
   onSubmit,
+  defultValues
 }: ExpenseFormProps) {
+
   const [inputValues, setInputValues] = useState({
-    amount: '',
-    date: '',
-    description: '',
+    amount:defultValues ? defultValues.amount.toString() : '',
+    date: defultValues ? defultValues.date.toISOString().slice(0,10) : '',
+    description: defultValues ? defultValues.description :  '',
   });
 
   function inputChangedHandler(

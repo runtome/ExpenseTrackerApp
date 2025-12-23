@@ -30,6 +30,10 @@ export default function ManageExpense() {
 
   const isEditing = !!expenseId;
 
+  const selectedExpense = expensesCtx.expenses.find(
+    (expense) => expense.id === expenseId
+  )
+
   useLayoutEffect(() => {
     navigation.setOptions({
       title: isEditing ? 'Edit Expense' : 'Add Expense',
@@ -47,17 +51,6 @@ export default function ManageExpense() {
     navigation.goBack();
   }
 
-  // function confirmHandler(expenseData) {
-
-  //   if (isEditing && expenseId) {
-  //     expensesCtx.updateExpense(expenseId, expenseData);
-  //   } else {
-  //     expensesCtx.addExpense(expenseData);
-  //   }
-
-  //   router.back();
-  // }
-
   function confirmHandler(expenseData: ExpenseFormData) {
   if (isEditing) {
     expensesCtx.updateExpense(expenseId!, expenseData);
@@ -74,7 +67,8 @@ export default function ManageExpense() {
       <ExpenseForm 
         submitButtonLable={isEditing? 'Update' : 'Add'}
         onCancel={cancelHandler} 
-        onSubmit={confirmHandler} 
+        onSubmit={confirmHandler}
+        defultValues={selectedExpense}
       />
       {isEditing && (
         <View style={styles.deleteContainer}>
