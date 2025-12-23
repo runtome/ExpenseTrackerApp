@@ -1,12 +1,12 @@
 import { StyleSheet, View } from 'react-native';
 
+import ExpenseForm from '@/components/ManageExpense/ExpenseForm';
 import Button from '@/components/ui/Button';
 import IconButton from '@/components/ui/IconButton';
 import { GlobalStyles } from '@/constants/styles';
 import { ExpensesContext } from '@/store/expenses-context';
 import { useLocalSearchParams, useNavigation, useRouter } from 'expo-router';
 import { useContext, useLayoutEffect, useState } from 'react';
- 
 
 type ManageExpenseParams = {
   expenseId?: string;
@@ -61,6 +61,7 @@ export default function ManageExpense() {
 
   return (
     <View style={styles.container}>
+      <ExpenseForm />
       <View style={styles.buttons}>
         <Button style={styles.button} mode="flat" onPress={cancelHandler}>
           Cancel
