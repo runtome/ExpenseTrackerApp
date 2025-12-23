@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { Alert, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
+import { GlobalStyles } from '@/constants/styles';
 import { Expense } from '@/models/expense';
 import Button from '../ui/Button';
 import Input from './Input';
@@ -74,7 +75,7 @@ export default function ExpenseForm({
       expenseData.description.trim().length > 0;
 
     if (!amountIsValid || !dateIsValid || !descriptionIsValid) {
-      Alert.alert('Invalid input', 'Please check your input values');
+      // Alert.alert('Invalid input', 'Please check your input values');
       setInputs((curInputs) => ({
         amount: {
           value: curInputs.amount.value,
@@ -95,6 +96,10 @@ export default function ExpenseForm({
     onSubmit(expenseData);
   }
 
+  const formIsInvalid = 
+  !inputs.amount.isValid ||
+  !inputs.date.isValid ||
+  !inputs.description.isValid;
 
   return (
     <View style={styles.form}>
@@ -103,6 +108,7 @@ export default function ExpenseForm({
       <View style={styles.inputsRow}>
         <Input
           label="Amount"
+          invalid={!inputs.amount.isValid}
           textInputConfig={{
             keyboardType: 'decimal-pad',
             value: inputs.amount.value,
@@ -113,6 +119,7 @@ export default function ExpenseForm({
 
         <Input
           label="Date"
+          invalid={!inputs.date.isValid}
           textInputConfig={{
             placeholder: 'YYYY-MM-DD',
             maxLength: 10,
@@ -125,6 +132,7 @@ export default function ExpenseForm({
 
       <Input
         label="Description"
+        invalid={!inputs.description.isValid}
         textInputConfig={{
           multiline: true,
           value: inputs.description.value,
@@ -132,7 +140,9 @@ export default function ExpenseForm({
             inputChangedHandler('description', value),
         }}
       />
-
+      {formIsInvalid && (
+        <Text style={styles.errorText}>Invalid input values - please check your entered data!</Text>
+      )}
       <View style={styles.buttons}>
         <Button style={styles.button} mode="flat" onPress={onCancel}>
           Cancel
@@ -159,6 +169,11 @@ const styles = StyleSheet.create({
   inputsRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+  },
+  errorText: {
+    textAlign: 'center',
+    color: GlobalStyles.colors.error500,
+    margin: 8,
   },
   buttons: {
     flexDirection: 'row',
