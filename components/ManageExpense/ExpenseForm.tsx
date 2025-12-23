@@ -1,11 +1,18 @@
 import { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
+import Button from '../ui/Button';
 import Input from './Input';
 
 type InputIdentifier = 'amount' | 'date' | 'description';
 
-export default function ExpenseForm() {
+interface ExpenseFormProps {
+  submitButtonLable: 'Update' | 'Add',
+  onCancel: () => void,
+  onSubmit: () => void,
+}
+
+export default function ExpenseForm({submitButtonLable, onCancel, onSubmit}:ExpenseFormProps) {
   const [inputValues, setInputValues] = useState({
     amount: '',
     date: '',
@@ -58,6 +65,14 @@ export default function ExpenseForm() {
             inputChangedHandler('description', value),
         }}
       />
+      <View style={styles.buttons}>
+        <Button style={styles.button} mode="flat" onPress={onCancel}>
+          Cancel
+        </Button>
+        <Button style={styles.button} onPress={onSubmit}>
+          {submitButtonLable}
+        </Button>
+      </View>
     </View>
   );
 }
@@ -76,5 +91,14 @@ const styles = StyleSheet.create({
   inputsRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+  },
+    buttons: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  button: {
+    minWidth: 120,
+    marginHorizontal: 8,
   },
 });
