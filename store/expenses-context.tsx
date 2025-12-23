@@ -11,6 +11,7 @@ interface ExpensesContextType {
   expenses: Expense[];
   setExpenses: (expenses: Expense[]) => void;
   addExpense: (expenseData: ExpenseData) => void;
+  addExpenseWithId: (expense: Expense) => void; // ✅ NEW
   updateExpense: (id: string, expenseData: ExpenseData) => void;
   deleteExpense: (id: string) => void;
 }
@@ -19,6 +20,7 @@ export const ExpensesContext = createContext<ExpensesContextType>({
   expenses: [],
   setExpenses: () => {},
   addExpense: () => {},
+  addExpenseWithId: () => {},
   updateExpense: () => {},
   deleteExpense: () => {},
 });
@@ -36,7 +38,8 @@ function expensesReducer(state: Expense[], action: Action): Expense[] {
       return [{ ...action.payload, id }, ...state];
 
     case 'SET':
-      return action.payload;
+      const inverted = action.payload.reverse()
+      return inverted;
 
     case 'UPDATE':
       return state.map((expense) =>
@@ -76,12 +79,20 @@ export function ExpensesContextProvider({
     dispatch({ type: 'DELETE', payload: id });
   }
 
+  function addExpenseWithId(expense: Expense) {
+  dispatch({
+    type: 'SET',
+    payload: [expense, ...expensesState],
+  });
+}
+
   return (
     <ExpensesContext.Provider
       value={{
         expenses: expensesState,
         setExpenses,
         addExpense,
+        addExpenseWithId,
         updateExpense,
         deleteExpense,
       }}

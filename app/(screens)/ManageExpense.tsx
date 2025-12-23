@@ -48,15 +48,21 @@ export default function ManageExpense() {
     navigation.goBack();
   }
 
-  function confirmHandler(expenseData: ExpenseFormData) {
-  if (isEditing) {
-    expensesCtx.updateExpense(expenseId!, expenseData);
-  } else {
-    storeExpense(expenseData);
-    expensesCtx.addExpense(expenseData);
+  async function confirmHandler(expenseData: ExpenseFormData) {
+    if (isEditing) {
+      expensesCtx.updateExpense(expenseId!, expenseData);
+    } else {
+      const id = await storeExpense(expenseData);
+
+      expensesCtx.addExpenseWithId({
+        id,
+        ...expenseData,
+      });
+    }
+
+    router.back();
   }
-  router.back();
-}
+
 
 
 

@@ -9,19 +9,17 @@ interface ExpenseFormData {
 
 const API_URL = process.env.EXPO_PUBLIC_API_URL;
 
-export function storeExpense(expenseData: ExpenseFormData) {
-  return axios.post(
-    `${API_URL}/expenses.json`,
-    expenseData
-  );
+export async function storeExpense(expenseData: ExpenseFormData) {
+  const response = await axios.post(`${API_URL}/expenses.json`, expenseData);
+  const id =  response.data.name; // Firebase returns the generated id in 'name' field
+  return id; 
 }
+
 
 export async function fetchExpenses() {
   const response = await axios.get(`${API_URL}/expenses.json`);
 
   const expenses = [];
-
-  console.log(response.data)
 
   for (const key in response.data) {
     const expenseObj = {
