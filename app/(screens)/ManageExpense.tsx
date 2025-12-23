@@ -2,11 +2,12 @@ import { StyleSheet, View } from 'react-native';
 
 import ExpenseForm from '@/components/ManageExpense/ExpenseForm';
 import IconButton from '@/components/ui/IconButton';
+import LoadingOverlay from '@/components/ui/LoadingOverlay';
 import { GlobalStyles } from '@/constants/styles';
 import { ExpensesContext } from '@/store/expenses-context';
 import { deleteExpense, storeExpense, updateExpense } from '@/utils/http';
 import { useLocalSearchParams, useNavigation, useRouter } from 'expo-router';
-import { useContext, useLayoutEffect } from 'react';
+import { useContext, useLayoutEffect, useState } from 'react';
 
 type ManageExpenseParams = {
   expenseId?: string;
@@ -19,6 +20,7 @@ interface ExpenseFormData {
 }
 
 export default function ManageExpense() {
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { expenseId } = useLocalSearchParams<ManageExpenseParams>();
   const navigation = useNavigation();
   const expensesCtx = useContext(ExpensesContext);
@@ -39,7 +41,9 @@ export default function ManageExpense() {
 
   async function deleteHandler() {
     if (expenseId) {
+      setIsSubmitting(true);
       await deleteExpense(expenseId);
+      // setIsSubmitting(false);
       expensesCtx.deleteExpense(expenseId);
       router.back();
     }
@@ -50,6 +54,7 @@ export default function ManageExpense() {
   }
 
   async function confirmHandler(expenseData: ExpenseFormData) {
+    setIsSubmitting(true);
     if (isEditing) {
       expensesCtx.updateExpense(expenseId, expenseData);
       await updateExpense(expenseId, expenseData);
@@ -63,6 +68,10 @@ export default function ManageExpense() {
     }
 
     router.back();
+  }
+
+  if (isSubmitting) {
+    return <LoadingOverlay />;
   }
 
 
