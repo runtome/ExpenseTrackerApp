@@ -6,13 +6,23 @@ import Input from './Input';
 
 type InputIdentifier = 'amount' | 'date' | 'description';
 
-interface ExpenseFormProps {
-  submitButtonLable: 'Update' | 'Add',
-  onCancel: () => void,
-  onSubmit: () => void,
+interface ExpenseFormData {
+  amount: number;
+  date: Date;
+  description: string;
 }
 
-export default function ExpenseForm({submitButtonLable, onCancel, onSubmit}:ExpenseFormProps) {
+interface ExpenseFormProps {
+  submitButtonLable: 'Update' | 'Add';
+  onCancel: () => void;
+  onSubmit: (expenseData: ExpenseFormData) => void;
+}
+
+export default function ExpenseForm({
+  submitButtonLable,
+  onCancel,
+  onSubmit,
+}: ExpenseFormProps) {
   const [inputValues, setInputValues] = useState({
     amount: '',
     date: '',
@@ -27,6 +37,16 @@ export default function ExpenseForm({submitButtonLable, onCancel, onSubmit}:Expe
       ...curInputValues,
       [inputIdentifier]: enteredValue,
     }));
+  }
+
+  function submitHandler() {
+    const expenseData: ExpenseFormData = {
+      amount: +inputValues.amount,
+      date: new Date(inputValues.date),
+      description: inputValues.description,
+    };
+
+    onSubmit(expenseData);
   }
 
   return (
@@ -65,11 +85,12 @@ export default function ExpenseForm({submitButtonLable, onCancel, onSubmit}:Expe
             inputChangedHandler('description', value),
         }}
       />
+
       <View style={styles.buttons}>
         <Button style={styles.button} mode="flat" onPress={onCancel}>
           Cancel
         </Button>
-        <Button style={styles.button} onPress={onSubmit}>
+        <Button style={styles.button} onPress={submitHandler}>
           {submitButtonLable}
         </Button>
       </View>
@@ -92,7 +113,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-    buttons: {
+  buttons: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',

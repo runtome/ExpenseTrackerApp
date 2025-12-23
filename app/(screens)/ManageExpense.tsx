@@ -11,6 +11,12 @@ type ManageExpenseParams = {
   expenseId?: string;
 };
 
+interface ExpenseFormData {
+  amount: number;
+  date: Date;
+  description: string;
+}
+
 export default function ManageExpense() {
   const { expenseId } = useLocalSearchParams<ManageExpenseParams>();
   const navigation = useNavigation();
@@ -41,21 +47,26 @@ export default function ManageExpense() {
     navigation.goBack();
   }
 
-  function confirmHandler() {
-    const expenseData = {
-      description: description,
-      amount: +amount,
-      date: new Date(),
-    };
+  // function confirmHandler(expenseData) {
 
-    if (isEditing && expenseId) {
-      expensesCtx.updateExpense(expenseId, expenseData);
-    } else {
-      expensesCtx.addExpense(expenseData);
-    }
+  //   if (isEditing && expenseId) {
+  //     expensesCtx.updateExpense(expenseId, expenseData);
+  //   } else {
+  //     expensesCtx.addExpense(expenseData);
+  //   }
 
-    router.back();
+  //   router.back();
+  // }
+
+  function confirmHandler(expenseData: ExpenseFormData) {
+  if (isEditing) {
+    expensesCtx.updateExpense(expenseId!, expenseData);
+  } else {
+    expensesCtx.addExpense(expenseData);
   }
+  router.back();
+}
+
 
 
   return (
