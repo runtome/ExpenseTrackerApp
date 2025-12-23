@@ -34,3 +34,11 @@ export async function fetchExpenses() {
 
   return expenses;
 }
+
+export  function updateExpense(id: string, expenseData: ExpenseFormData) {
+  return axios.put(`${API_URL}/expenses/${id}.json`, expenseData);
+}
+export  function deleteExpense(id: string) {
+  return axios.delete(`${API_URL}/expenses/${id}.json`);
+}
+

@@ -4,7 +4,7 @@ import ExpenseForm from '@/components/ManageExpense/ExpenseForm';
 import IconButton from '@/components/ui/IconButton';
 import { GlobalStyles } from '@/constants/styles';
 import { ExpensesContext } from '@/store/expenses-context';
-import { storeExpense } from '@/utils/http';
+import { deleteExpense, storeExpense, updateExpense } from '@/utils/http';
 import { useLocalSearchParams, useNavigation, useRouter } from 'expo-router';
 import { useContext, useLayoutEffect } from 'react';
 
@@ -37,8 +37,9 @@ export default function ManageExpense() {
     });
   }, [navigation, isEditing]);
 
-  function deleteHandler() {
+  async function deleteHandler() {
     if (expenseId) {
+      await deleteExpense(expenseId);
       expensesCtx.deleteExpense(expenseId);
       router.back();
     }
@@ -50,7 +51,8 @@ export default function ManageExpense() {
 
   async function confirmHandler(expenseData: ExpenseFormData) {
     if (isEditing) {
-      expensesCtx.updateExpense(expenseId!, expenseData);
+      expensesCtx.updateExpense(expenseId, expenseData);
+      await updateExpense(expenseId, expenseData);
     } else {
       const id = await storeExpense(expenseData);
 
