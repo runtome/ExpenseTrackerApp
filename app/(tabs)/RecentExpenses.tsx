@@ -1,13 +1,15 @@
 // app/(tabs)/RecentExpenses.tsx
 import ExpensesOutput from '@/components/ExpensesOutput/ExpensesOutput';
-import { DUMMY_EXPENSES } from '@/data/dummy-expenses';
+import { ExpensesContext } from '@/store/expenses-context';
+import { useContext } from 'react';
 
-const getDateMinusDays = (date: Date, days: number) => {
-  return new Date(date.getFullYear(), date.getMonth(), date.getDate() - days);
-};
+const getDateMinusDays = (date: Date, days: number) =>
+  new Date(date.getFullYear(), date.getMonth(), date.getDate() - days);
 
 export default function RecentExpenses() {
-  const recentExpenses = DUMMY_EXPENSES.filter((expense) => {
+  const expensesCtx = useContext(ExpensesContext);
+
+  const recentExpenses = expensesCtx.expenses.filter((expense) => {
     const today = new Date();
     const date7DaysAgo = getDateMinusDays(today, 7);
     return expense.date >= date7DaysAgo;

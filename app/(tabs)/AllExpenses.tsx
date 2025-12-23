@@ -1,11 +1,14 @@
 // app/(tabs)/AllExpenses.tsx
 import ExpensesOutput from '@/components/ExpensesOutput/ExpensesOutput';
-import { DUMMY_EXPENSES } from '@/data/dummy-expenses';
+import { ExpensesContext } from '@/store/expenses-context';
+import { useContext } from 'react';
 
 export default function AllExpenses() {
+  const expensesCtx = useContext(ExpensesContext);
+
   return (
     <ExpensesOutput
-      expenses={DUMMY_EXPENSES}
+      expenses={expensesCtx.expenses}
       expensePeriod="Total"
     />
   );
