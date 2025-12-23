@@ -4,8 +4,9 @@ import ExpenseForm from '@/components/ManageExpense/ExpenseForm';
 import IconButton from '@/components/ui/IconButton';
 import { GlobalStyles } from '@/constants/styles';
 import { ExpensesContext } from '@/store/expenses-context';
+import { storeExpense } from '@/utils/http';
 import { useLocalSearchParams, useNavigation, useRouter } from 'expo-router';
-import { useContext, useLayoutEffect, useState } from 'react';
+import { useContext, useLayoutEffect } from 'react';
 
 type ManageExpenseParams = {
   expenseId?: string;
@@ -22,10 +23,6 @@ export default function ManageExpense() {
   const navigation = useNavigation();
   const expensesCtx = useContext(ExpensesContext);
   const router = useRouter();
-
-  const [description, setDescription] = useState('Test !!!!');
-  const [amount, setAmount] = useState('29.00');
-  const [date, setDate] = useState('');
 
 
   const isEditing = !!expenseId;
@@ -55,6 +52,7 @@ export default function ManageExpense() {
   if (isEditing) {
     expensesCtx.updateExpense(expenseId!, expenseData);
   } else {
+    storeExpense(expenseData);
     expensesCtx.addExpense(expenseData);
   }
   router.back();

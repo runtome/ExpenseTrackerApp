@@ -22,5 +22,8 @@
 
 5. Http Requests
 
+   5.1 Set up Firebase 
+   5.2 + item and it will be record in firebase
+
 
 
